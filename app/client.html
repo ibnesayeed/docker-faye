@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-type' />
+    <title>Faye Pub/Sub Client</title>
+    <script  type="text/javascript" src="http://localhost:8000/faye/client.js"></script>
+  </head>
+  <body>
+    <div id="log"></div>
+    <script type="text/javascript">
+      var logdiv = document.getElementById('log');
+      var client = new Faye.Client('http://localhost:8000/faye');
+      client.subscribe('/test', function(message) {
+        var node = document.createElement("div");
+        var textnode = document.createTextNode("Got a message: " + message.text);
+        node.appendChild(textnode);
+        logdiv.appendChild(node);
+      });
+      client.publish('/test', {
+        text: 'Hello world'
+      });
+    </script>
+  </body>
+</html>
